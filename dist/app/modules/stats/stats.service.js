@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StatsService = void 0;
 const payment_model_1 = require("../payment/payment.model");
@@ -11,8 +20,8 @@ const driver_model_1 = require("../driver/driver.model");
 const now = new Date();
 const sevenDaysAgo = new Date(now).setDate(now.getDate() - 7);
 const thirtyDaysAgo = new Date(now).setDate(now.getDate() - 30);
-const getUserStats = async () => {
-    const [totalUsers, activeUsers, inactiveUsers, blockedUsers, newUsers7, newUsers30, usersByRole] = await Promise.all([
+const getUserStats = () => __awaiter(void 0, void 0, void 0, function* () {
+    const [totalUsers, activeUsers, inactiveUsers, blockedUsers, newUsers7, newUsers30, usersByRole] = yield Promise.all([
         user_model_1.User.countDocuments(),
         user_model_1.User.countDocuments({ isActive: user_interface_1.IsActive.ACTIVE }),
         user_model_1.User.countDocuments({ isActive: user_interface_1.IsActive.INACTIVE }),
@@ -32,9 +41,10 @@ const getUserStats = async () => {
         newUsers30,
         usersByRole,
     };
-};
-const getRideStats = async () => {
-    const [totalRides, ridesByStatus, topRoutes, avgDistance] = await Promise.all([
+});
+const getRideStats = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const [totalRides, ridesByStatus, topRoutes, avgDistance] = yield Promise.all([
         ride_model_1.Ride.countDocuments(),
         ride_model_1.Ride.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
         ride_model_1.Ride.aggregate([
@@ -71,11 +81,12 @@ const getRideStats = async () => {
         totalRides,
         ridesByStatus,
         topRoutes,
-        avgDistance: avgDistance?.[0]?.avgDistance || 0
+        avgDistance: ((_a = avgDistance === null || avgDistance === void 0 ? void 0 : avgDistance[0]) === null || _a === void 0 ? void 0 : _a.avgDistance) || 0
     };
-};
-const getDriverStats = async (driverId) => {
-    const [totalRides, completedRides, earnings, recentRides, totalDrivers,] = await Promise.all([
+});
+const getDriverStats = (driverId) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const [totalRides, completedRides, earnings, recentRides, totalDrivers,] = yield Promise.all([
         ride_model_1.Ride.countDocuments({ driver: driverId }),
         ride_model_1.Ride.countDocuments({ driver: driverId, status: "COMPLETED" }),
         payment_model_1.Payment.aggregate([
@@ -91,13 +102,13 @@ const getDriverStats = async (driverId) => {
     return {
         totalRides,
         completedRides,
-        totalEarnings: earnings?.[0]?.total || 0,
+        totalEarnings: ((_a = earnings === null || earnings === void 0 ? void 0 : earnings[0]) === null || _a === void 0 ? void 0 : _a.total) || 0,
         recentRides,
         totalDrivers,
     };
-};
-const getBookingStats = async () => {
-    const [totalBookings, bookingsByStatus, uniqueUsers, bookings7, bookings30] = await Promise.all([
+});
+const getBookingStats = () => __awaiter(void 0, void 0, void 0, function* () {
+    const [totalBookings, bookingsByStatus, uniqueUsers, bookings7, bookings30] = yield Promise.all([
         booking_model_1.RideBooking.countDocuments(),
         booking_model_1.RideBooking.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
         booking_model_1.RideBooking.distinct("rider").then(riders => riders.length),
@@ -111,9 +122,10 @@ const getBookingStats = async () => {
         bookings7,
         bookings30,
     };
-};
-const getPaymentStats = async () => {
-    const [totalPayments, paymentsByStatus, totalRevenue, avgAmount, gateways] = await Promise.all([
+});
+const getPaymentStats = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const [totalPayments, paymentsByStatus, totalRevenue, avgAmount, gateways] = yield Promise.all([
         payment_model_1.Payment.countDocuments(),
         payment_model_1.Payment.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]),
         payment_model_1.Payment.aggregate([
@@ -130,11 +142,11 @@ const getPaymentStats = async () => {
     return {
         totalPayments,
         paymentsByStatus,
-        totalRevenue: totalRevenue?.[0]?.total || 0,
-        avgAmount: avgAmount?.[0]?.avg || 0,
+        totalRevenue: ((_a = totalRevenue === null || totalRevenue === void 0 ? void 0 : totalRevenue[0]) === null || _a === void 0 ? void 0 : _a.total) || 0,
+        avgAmount: ((_b = avgAmount === null || avgAmount === void 0 ? void 0 : avgAmount[0]) === null || _b === void 0 ? void 0 : _b.avg) || 0,
         gateways,
     };
-};
+});
 exports.StatsService = {
     getUserStats,
     getRideStats,

@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -12,7 +21,7 @@ const env_1 = require("../../config/env");
 const AppError_1 = __importDefault(require("../../errorHelpers/AppError"));
 const payment_model_1 = require("../payment/payment.model");
 const ride_model_1 = require("../ride/ride.model");
-const sslPaymentInit = async (payload) => {
+const sslPaymentInit = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = {
             store_id: env_1.envVars.SSL.STORE_ID,
@@ -46,7 +55,7 @@ const sslPaymentInit = async (payload) => {
             ship_postcode: 1000,
             ship_country: "N/A",
         };
-        const response = await (0, axios_1.default)({
+        const response = yield (0, axios_1.default)({
             method: "POST",
             url: env_1.envVars.SSL.SSL_PAYMENT_API,
             data: data,
@@ -57,22 +66,22 @@ const sslPaymentInit = async (payload) => {
     catch (error) {
         throw new AppError_1.default(http_status_codes_1.default.BAD_REQUEST, error.message);
     }
-};
-const validatePayment = async (payload) => {
+});
+const validatePayment = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = await (0, axios_1.default)({
+        const response = yield (0, axios_1.default)({
             method: "GET",
             url: `${env_1.envVars.SSL.SSL_VALIDATION_API}?val_id=${payload.val_id}&store_id=${env_1.envVars.SSL.STORE_ID}&store_passwd=${env_1.envVars.SSL.STORE_PASS}`
         });
         console.log("sslcomeerz validate api response", response.data);
-        await payment_model_1.Payment.updateOne({ transactionId: payload.tran_id }, { paymentGatewayData: response.data }, { runValidators: true });
-        await ride_model_1.Ride.findOneAndUpdate({ transactionId: payload.tran_id }, { paymentStatus: "paid", status: "completed" });
+        yield payment_model_1.Payment.updateOne({ transactionId: payload.tran_id }, { paymentGatewayData: response.data }, { runValidators: true });
+        yield ride_model_1.Ride.findOneAndUpdate({ transactionId: payload.tran_id }, { paymentStatus: "paid", status: "completed" });
     }
     catch (error) {
         console.log(error);
         throw new AppError_1.default(401, `Payment Validation Error, ${error.message}`);
     }
-};
+});
 exports.SSLService = {
     sslPaymentInit,
     validatePayment
