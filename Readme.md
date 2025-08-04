@@ -77,8 +77,8 @@ Follow these steps to run the project locally:
 ## 📡 API Endpoints
 
 ### Users
-`POST /api/v1/user/register` Register a new user
-`GET /api/v1/user/all-users` List all users (with filters)
+- `POST /api/v1/user/register` Register a new user
+- `GET /api/v1/user/all-users` List all users (with filters)
 
 **Query Parameters:**
 - `fields` Select fields to return (e.g. `name,email`)
@@ -86,23 +86,23 @@ Follow these steps to run the project locally:
 - `limit` Max number of users
 - `page` For pagination
 
-`GET /api/v1/user/me` Get current logged-in user
-`PATCH /api/v1/user/:id` Update user profile
+- `GET /api/v1/user/me` Get current logged-in user
+- `PATCH /api/v1/user/:id` Update user profile
 ---
 
 ### Auth
-`POST /api/v1/auth/login` Login
-`POST /api/v1/auth/logout` Logout
-`POST /api/v1/auth/change-password` Change password
-`POST /api/v1/auth/reset-password` Reset password
-`POST /api/v1/auth/forgot-password` Forgot password
-`POST /api/v1/auth/refresh-token` Refresh JWT
-`POST /api/v1/auth/set-password` Set password
+- `POST /api/v1/auth/login` Login
+- `POST /api/v1/auth/logout` Logout
+- `POST /api/v1/auth/change-password` Change password
+- `POST /api/v1/auth/reset-password` Reset password
+- `POST /api/v1/auth/forgot-password` Forgot password
+- `POST /api/v1/auth/refresh-token` Refresh JWT
+- `POST /api/v1/auth/set-password` Set password
 ---
 
 ### Drivers
-`POST /api/v1/drivers/create` Create a driver profile
-`GET /api/v1/drivers` List all drivers (with filters)
+- `POST /api/v1/drivers/create` Create a driver profile
+- `GET /api/v1/drivers` List all drivers (with filters)
 
 **Query Parameters:**
 - `searchTerm` Keyword search
@@ -111,9 +111,9 @@ Follow these steps to run the project locally:
 - `sortBy` e.g. `createdAt`
 - `sortOrder` `asc` or `desc`
 
-`GET /api/v1/drivers/:id` Get driver by ID
-`PATCH /api/v1/drivers/:id/status` Update drivers status
-`GET /api/v1/drivers/nearest` Find nearest drivers by geo-location
+- `GET /api/v1/drivers/:id` Get driver by ID
+- `PATCH /api/v1/drivers/:id/status` Update drivers status
+- `GET /api/v1/drivers/nearest` Find nearest drivers by geo-location
 
 **Geo Query Parameters:**
 - `lng` Longitude
@@ -122,8 +122,8 @@ Follow these steps to run the project locally:
 ---
 
 ### Rides
-`POST /api/v1/rides/request` Request a new ride
-`GET /api/v1/rides` List rides (with filters)
+- `POST /api/v1/rides/request` Request a new ride
+- `GET /api/v1/rides` List rides (with filters)
 
 **Query Parameters:**
 - `status` e.g. `COMPLETED`, `CANCELLED`
@@ -131,34 +131,34 @@ Follow these steps to run the project locally:
 - `sortBy` e.g. `createdAt`
 - `sortOrder` `asc` or `desc`
 
-`GET /api/v1/rides/my-rides-history` Get logged-in user's ride history
-`PATCH /api/v1/rides/:id/cancel` Cancel a ride
+- `GET /api/v1/rides/my-rides-history` Get logged-in user's ride history
+- `PATCH /api/v1/rides/:id/cancel` Cancel a ride
 ---
 
 ### Bookings
-`POST /api/v1/booking` Create a booking
-`GET /api/v1/booking` List all bookings
-`GET /api/v1/booking/my-bookings` Get logged-in user's bookings
-`GET /api/v1/booking/:id` Get a booking by ID
-`PATCH /api/v1/booking/:id/status` Update booking status
+- `POST /api/v1/booking` Create a booking
+- `GET /api/v1/booking` List all bookings
+- `GET /api/v1/booking/my-bookings` Get logged-in user's bookings
+- `GET /api/v1/booking/:id` Get a booking by ID
+- `PATCH /api/v1/booking/:id/status` Update booking status
 ---
 
 ### Payments
-`POST /api/v1/payment/init-payment/:bookingId` Initiate payment for booking
-`GET /api/v1/payment/invoice/:bookingId` Get invoice download URL
+- `POST /api/v1/payment/init-payment/:bookingId` Initiate payment for booking
+- `GET /api/v1/payment/invoice/:bookingId` Get invoice download URL
 ---
 
 ### Stats
-`GET /api/v1/stats/user` Get user statistics
-`GET /api/v1/stats/driver` Get driver statistics
-`GET /api/v1/stats/ride` Get ride statistics
-`GET /api/v1/stats/booking` Get booking statistics
-`GET /api/v1/stats/payment` Get payment statistics
+- `GET /api/v1/stats/user` Get user statistics
+- `GET /api/v1/stats/driver` Get driver statistics
+- `GET /api/v1/stats/ride` Get ride statistics
+- `GET /api/v1/stats/booking` Get booking statistics
+- `GET /api/v1/stats/payment` Get payment statistics
 ---
 
 ### OTP
-`POST /api/v1/otp/send` Send OTP to user
-`POST /api/v1/otp/verify` Verify OTP 
+- `POST /api/v1/otp/send` Send OTP to user
+- `POST /api/v1/otp/verify` Verify OTP 
 
 ## 🧹 Code Quality
 - TypeScript interfaces for type safety.
