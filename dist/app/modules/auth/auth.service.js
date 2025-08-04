@@ -1,14 +1,5 @@
 "use strict";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -24,26 +15,26 @@ const sendEmail_1 = require("../../utils/sendEmail");
 const userTokens_1 = require("../../utils/userTokens");
 const user_interface_1 = require("../user/user.interface");
 const user_model_1 = require("../user/user.model");
-const getNewAccessToken = (refreshToken) => __awaiter(void 0, void 0, void 0, function* () {
-    const newAccessToken = yield (0, userTokens_1.createNewAccessTokenWithRefreshToken)(refreshToken);
+const getNewAccessToken = async (refreshToken) => {
+    const newAccessToken = await (0, userTokens_1.createNewAccessTokenWithRefreshToken)(refreshToken);
     return {
         accessToken: newAccessToken
     };
-});
-const resetPassword = (payload, decodedToken) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const resetPassword = async (payload, decodedToken) => {
     if (payload.id != decodedToken.userId) {
         throw new AppError_1.default(401, "You can not reset your password");
     }
-    const isUserExist = yield user_model_1.User.findById(decodedToken.userId);
+    const isUserExist = await user_model_1.User.findById(decodedToken.userId);
     if (!isUserExist) {
         throw new AppError_1.default(401, "User does not exist");
     }
-    const hashedPassword = yield bcryptjs_1.default.hash(payload.newPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
+    const hashedPassword = await bcryptjs_1.default.hash(payload.newPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
     isUserExist.password = hashedPassword;
-    yield isUserExist.save();
-});
-const forgotPassword = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const isUserExist = yield user_model_1.User.findOne({ email });
+    await isUserExist.save();
+};
+const forgotPassword = async (email) => {
+    const isUserExist = await user_model_1.User.findOne({ email });
     if (!isUserExist) {
         throw new AppError_1.default(http_status_codes_1.default.BAD_REQUEST, "User does not exist");
     }
@@ -74,16 +65,16 @@ const forgotPassword = (email) => __awaiter(void 0, void 0, void 0, function* ()
             resetUILink
         }
     });
-});
-const setPassword = (userId, plainPassword) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.findById(userId);
+};
+const setPassword = async (userId, plainPassword) => {
+    const user = await user_model_1.User.findById(userId);
     if (!user) {
         throw new AppError_1.default(404, "User not found");
     }
     if (user.password && user.auths.some(providerObject => providerObject.provider === "google")) {
         throw new AppError_1.default(http_status_codes_1.default.BAD_REQUEST, "You have already set you password. Now you can change the password from your profile password update");
     }
-    const hashedPassword = yield bcryptjs_1.default.hash(plainPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
+    const hashedPassword = await bcryptjs_1.default.hash(plainPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
     const credentialProvider = {
         provider: "credentials",
         providerId: user.email
@@ -91,17 +82,17 @@ const setPassword = (userId, plainPassword) => __awaiter(void 0, void 0, void 0,
     const auths = [...user.auths, credentialProvider];
     user.password = hashedPassword;
     user.auths = auths;
-    yield user.save();
-});
-const changePassword = (oldPassword, newPassword, decodedToken) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.findById(decodedToken.userId);
-    const isOldPasswordMatch = yield bcryptjs_1.default.compare(oldPassword, user.password);
+    await user.save();
+};
+const changePassword = async (oldPassword, newPassword, decodedToken) => {
+    const user = await user_model_1.User.findById(decodedToken.userId);
+    const isOldPasswordMatch = await bcryptjs_1.default.compare(oldPassword, user.password);
     if (!isOldPasswordMatch) {
         throw new AppError_1.default(http_status_codes_1.default.UNAUTHORIZED, "Old Password does not match");
     }
-    user.password = yield bcryptjs_1.default.hash(newPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
+    user.password = await bcryptjs_1.default.hash(newPassword, Number(env_1.envVars.BCRYPT_SALT_ROUND));
     user.save();
-});
+};
 exports.AuthServices = {
     getNewAccessToken,
     changePassword,

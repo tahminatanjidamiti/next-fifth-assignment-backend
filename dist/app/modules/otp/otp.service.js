@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -23,8 +14,8 @@ const generateOtp = (length = 6) => {
     const otp = crypto_1.default.randomInt(10 ** (length - 1), 10 ** length).toString();
     return otp;
 };
-const sendOTP = (email, name) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield user_model_1.User.findOne({ email });
+const sendOTP = async (email, name) => {
+    const user = await user_model_1.User.findOne({ email });
     if (!user) {
         throw new AppError_1.default(404, "User not found");
     }
@@ -33,13 +24,13 @@ const sendOTP = (email, name) => __awaiter(void 0, void 0, void 0, function* () 
     }
     const otp = generateOtp();
     const redisKey = `otp:${email}`;
-    yield redis_config_1.redisClient.set(redisKey, otp, {
+    await redis_config_1.redisClient.set(redisKey, otp, {
         expiration: {
             type: "EX",
             value: OTP_EXPIRATION
         }
     });
-    yield (0, sendEmail_1.sendEmail)({
+    await (0, sendEmail_1.sendEmail)({
         to: email,
         subject: "Your OTP Code",
         templateName: "otp",
@@ -48,10 +39,10 @@ const sendOTP = (email, name) => __awaiter(void 0, void 0, void 0, function* () 
             otp: otp
         }
     });
-});
-const verifyOTP = (email, otp) => __awaiter(void 0, void 0, void 0, function* () {
+};
+const verifyOTP = async (email, otp) => {
     // const user = await User.findOne({ email, isVerified: false })
-    const user = yield user_model_1.User.findOne({ email });
+    const user = await user_model_1.User.findOne({ email });
     if (!user) {
         throw new AppError_1.default(404, "User not found");
     }
@@ -59,18 +50,18 @@ const verifyOTP = (email, otp) => __awaiter(void 0, void 0, void 0, function* ()
         throw new AppError_1.default(401, "You are already verified");
     }
     const redisKey = `otp:${email}`;
-    const savedOtp = yield redis_config_1.redisClient.get(redisKey);
+    const savedOtp = await redis_config_1.redisClient.get(redisKey);
     if (!savedOtp) {
         throw new AppError_1.default(401, "Invalid OTP");
     }
     if (savedOtp !== otp) {
         throw new AppError_1.default(401, "Invalid OTP");
     }
-    yield Promise.all([
+    await Promise.all([
         user_model_1.User.updateOne({ email }, { isVerified: true }, { runValidators: true }),
         redis_config_1.redisClient.del([redisKey])
     ]);
-});
+};
 exports.OTPService = {
     sendOTP,
     verifyOTP
