@@ -52,8 +52,19 @@ const cancelRide = async (rideId: string) => {
   return ride;
 };
 
+const getMyRideHistory = async (userId: string) => {
+  const rides = await Ride.find({ riderId: userId })
+    .populate("riderId", "name email phone role isActive locaton bookings")
+    .populate("driverId", "name email phone role driverProfile")
+    .sort({ createdAt: -1 });
+
+  return rides;
+};
+
+
 export const rideService = {
     requestRide,
     getAllRides,
-    cancelRide
+    cancelRide,
+    getMyRideHistory
 }

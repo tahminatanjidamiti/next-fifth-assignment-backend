@@ -16,16 +16,15 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
         data: booking,
     });
 });
+
 const getUserBookings = catchAsync(async (req: Request, res: Response) => {
   const userId = (req.user as JwtPayload).userId;
   const bookings = await BookingService.getUserBookings(userId);
-  // if (!bookings.length) {
-  //     throw new AppError(httpStatus.NOT_FOUND, "You haven't make any booking yet!!");
-  //   }
+  
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Bookings retrieved successfully",
+    message:  bookings.length ? "Bookings retrieved successfully" : "You haven't make any booking yet!!",
     data: bookings,
   });
 });

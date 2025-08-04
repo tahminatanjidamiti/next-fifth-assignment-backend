@@ -3,6 +3,7 @@ import httpStatus from "http-status-codes";
 import { sendResponse } from "../../utils/sendResponse";
 import { rideService } from "./ride.service";
 import { catchAsync } from "../../utils/catchAsync";
+import { JwtPayload } from "jsonwebtoken";
 
 
 // 1. Rider requests a ride
@@ -40,10 +41,23 @@ const cancelRide = catchAsync(async (req: Request, res: Response) => {
     data: ride,
   });
 });
+const getMyRideHistory = catchAsync(async (req: Request, res: Response) => {
+  const userId = (req.user as JwtPayload).userId;
+  const bookings = await rideService.getMyRideHistory(userId);
+  
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: bookings.length ? "Rides history retrieved successfully" : "You haven't make any ride yet!!",
+    data: bookings,
+  });
+});
+
 
 
 export const rideControllers = {
     requestRide,
     getAllRides,
-    cancelRide
+    cancelRide,
+    getMyRideHistory
 }

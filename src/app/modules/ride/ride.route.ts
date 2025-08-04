@@ -8,7 +8,11 @@ import { validateRequest } from "../../middlewares/validateRequest";
 
 const router = express.Router();
 
-router.get("/", checkAuth(Role.ADMIN,), rideControllers.getAllRides);
 router.post("/request", validateRequest(createRideZodSchema), checkAuth(...Object.values(Role)), rideControllers.requestRide);
+router.get("/", checkAuth(Role.ADMIN), rideControllers.getAllRides);
+router.get("/my-rides-history",
+    checkAuth(...Object.values(Role)),
+    rideControllers.getMyRideHistory
+);
 router.patch("/:rideId/cancel", checkAuth(...Object.values(Role)), rideControllers.cancelRide);
 export const RideRoutes = router;
