@@ -103,6 +103,10 @@ Follow these steps to run the project locally:
 - `DELETE /api/v1/user/:id` Delete user profile
 ---
 
+### OTP
+- `POST /api/v1/otp/send` Send OTP to user
+- `POST /api/v1/otp/verify` Verify OTP 
+
 ### Auth
 - `POST /api/v1/auth/login` Login
 - `POST /api/v1/auth/logout` Logout
@@ -168,10 +172,6 @@ Follow these steps to run the project locally:
 - `GET /api/v1/stats/booking` Get booking statistics
 - `GET /api/v1/stats/payment` Get payment statistics
 ---
-
-### OTP
-- `POST /api/v1/otp/send` Send OTP to user
-- `POST /api/v1/otp/verify` Verify OTP 
 
 ## 🧹 Code Quality
 - TypeScript interfaces for type safety.
