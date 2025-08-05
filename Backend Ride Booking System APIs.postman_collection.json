@@ -1,0 +1,1610 @@
+{
+	"info": {
+		"_postman_id": "508626a7-6c3c-4b59-a52f-dd17e6849963",
+		"name": "Backend Ride Booking System APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45483878",
+		"_collection_link": "https://tahminatanjidamiti.postman.co/workspace/Tahmina-Tanjida-Miti's-Workspac~7b57061b-4d96-418e-817e-77afeabda221/collection/45483878-508626a7-6c3c-4b59-a52f-dd17e6849963?action=share&source=collection_link&creator=45483878"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Mahbub Vai\",\r\n    \"email\" : \"mahbub@gmail.com\",\r\n    \"password\" :\"@A123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/user/register",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2MzI2NCwiZXhwIjoxNzU0MzQ5NjY0fQ.yzAFi_BpQoJeimo-739VVWE7pAQyZVUWRkoqvWpQ7lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/user/all-users?sort=-1&fields=name,email&limit=6",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"all-users"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-1"
+								},
+								{
+									"key": "fields",
+									"value": "name,email"
+								},
+								{
+									"key": "limit",
+									"value": "6"
+								},
+								{
+									"key": "page",
+									"value": "6",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDE0NzMyOSwiZXhwIjoxNzU0MjMzNzI5fQ.Lby1vfhZ82xwgx5cmAJi95spvJbvf1oqtHpU-K-2Sf4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\" : \"01999999999\",\r\n    \"address\" : \"Planet Earth\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/user/688d424feac3d42e4b21bb1d",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"688d424feac3d42e4b21bb1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDE0NzMyOSwiZXhwIjoxNzU0MjMzNzI5fQ.Lby1vfhZ82xwgx5cmAJi95spvJbvf1oqtHpU-K-2Sf4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" :\"@A123456\"\r\n}"
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/user/me",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDM1MjM2NywiZXhwIjoxNzU0NDM4NzY3fQ.CttHOhw74NHpX1WrU9YuOnqUZteLmpH0r7kGAiqpc1g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/user/688d424feac3d42e4b21bb1d",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"688d424feac3d42e4b21bb1d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDE0NTY3MiwiZXhwIjoxNzU0MjMyMDcyfQ.5_GZZCOnI5t4iJH3KFgB9hF0g_zuLSnD06a4yH1wOHs",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" :\"@A123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/login",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Access Token / Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/refresh-token",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" :\"@A123456\"\r\n}"
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/logout",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODZmZDUwYmExMGRiNmZkZWFkNGNhNjIiLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTc1MzM3NTc4MiwiZXhwIjoxNzUzNDYyMTgyfQ.Mr2CDX4567Jzc_zK0KHsubIIH-L93iVqjHp_5TWfIE8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\" : \"@A12345678\",\r\n    \"newPassword\" : \"@A123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/change-password",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODZmZDUwYmExMGRiNmZkZWFkNGNhNjIiLCJlbWFpbCI6InN1cGVyQGdtYWlsLmNvbSIsInJvbGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTc1Mjk0MDE5NiwiZXhwIjoxNzUzMDI2NTk2fQ.qfClcKI5eWgut5SB_jSOt1Vi54S_xmbZOmUCBrsHJh4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/forgot-password",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdmMzEwYzcyNDE1MWViMmZjZjBjNDEiLCJlbWFpbCI6InNhbWluaXNyYXI2QGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUzMTY2NzUxLCJleHAiOjE3NTMxNjczNTF9.6fOrB14iKWkz6GFlNtSIK2tS9eJSuR-DnF6ie5xglPg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"688e23885640b74ece4a5fba\",\r\n    \"newPassword\" : \"@A123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/reset-password",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDE0NTY3MiwiZXhwIjoxNzU0MjMyMDcyfQ.5_GZZCOnI5t4iJH3KFgB9hF0g_zuLSnD06a4yH1wOHs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mity2027@gmail.com\",\r\n    \"password\" : \"@A123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/auth/set-password",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"set-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "Create Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDE1ODMzMiwiZXhwIjoxNzU0MjQ0NzMyfQ.VMRWgTIcQN9Fbmynw15o1nrf9BJAsqF3phaJ0fxhs9M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Mizan Vai\",\r\n  \"email\": \"Mizan@gmail.com\",\r\n  \"phone\": \"01755555555\",\r\n  \"riderId\" : \"688e5a4aa5f9edee560a5e35\",\r\n  \"location\": {\r\n    \"coordinates\": [90.7079, 23.8591],\r\n    \"formattedAddress\": \"Narayanganj, Bangladesh\"\r\n  },\r\n  \"driverProfile\": {\r\n    \"vehicleInfo\": {\r\n      \"type\": \"Bike\",\r\n      \"model\": \"Suzuki Gixxer\",\r\n      \"licensePlate\": \"NGJ-7890\"\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/drivers/create",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Driver",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John Doe\",\r\n  \"email\": \"john3@example.com\",\r\n  \"password\": \"SecurePass123!\",\r\n  \"phone\": \"017XXXXXXXX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/drivers",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drivers"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "sy",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Driver By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDE1ODMzMiwiZXhwIjoxNzU0MjQ0NzMyfQ.VMRWgTIcQN9Fbmynw15o1nrf9BJAsqF3phaJ0fxhs9M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/drivers/688ea1bb88379bb4dd973a8a",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drivers",
+								"688ea1bb88379bb4dd973a8a"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "sy",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Nearest Driver By Geo Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDE1ODMzMiwiZXhwIjoxNzU0MjQ0NzMyfQ.VMRWgTIcQN9Fbmynw15o1nrf9BJAsqF3phaJ0fxhs9M",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/drivers/nearest?lng=91.8831&lat=24.8917&radius=5",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drivers",
+								"nearest"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "sy",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "lng",
+									"value": "91.8831"
+								},
+								{
+									"key": "lat",
+									"value": "24.8917"
+								},
+								{
+									"key": "radius",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Driver Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2ODc1OCwiZXhwIjoxNzU0MzU1MTU4fQ.tvD1tGX20yAwyizOU4pL59_1DpsPzScwLgJldlBNu5A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"isOnline\": true,\r\n  \"approved\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/drivers/688ea1bb88379bb4dd973a8a/status",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"drivers",
+								"688ea1bb88379bb4dd973a8a",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ride",
+			"item": [
+				{
+					"name": "Request Ride",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDI2Mjc0NCwiZXhwIjoxNzU0MzQ5MTQ0fQ.HMrFzjbNz_kXjPDoOrKehuKMLfzZmTF1NdTYHiCNkCc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"riderId\": \"688e23885640b74ece4a5fba\",\r\n  \"driverId\": \"688e80d10d445f44b4df6f32\",\r\n  \"pickupLocation\": {\r\n    \"lat\": 24.895,\r\n    \"lng\": 91.875,\r\n    \"formattedAddress\": \"Lalakhal, Sylhet , Bangladesh\"\r\n  },\r\n  \"dropoffLocation\": {\r\n    \"lat\": 24.900,\r\n    \"lng\": 91.870,\r\n    \"formattedAddress\": \"Tanguar haowr, Sylhet, Bangladesh\"\r\n  },\r\n  \"status\": \"REQUESTED\",\r\n  \"fare\": 400,\r\n  \"distanceKm\": 5.5,\r\n  \"estimatedTime\": 30\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/rides/request",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rides",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Ride",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2MzI2NCwiZXhwIjoxNzU0MzQ5NjY0fQ.yzAFi_BpQoJeimo-739VVWE7pAQyZVUWRkoqvWpQ7lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/rides?status=COMPLETED&limit=1sort=-1",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rides"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Enjoy",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Chattogram",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "amid",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "location,-title",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "-title,-location",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "picturesque",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Dhaka",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "Embark",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "location",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "scenic",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "COMPLETED"
+								},
+								{
+									"key": "limit",
+									"value": "1sort=-1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Ride History",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDMxMDQyMSwiZXhwIjoxNzU0Mzk2ODIxfQ.AFGsgBpOOBQ9AToGTPdNCzpxaVRwNFIdqtk20XUVUHw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/rides/my-rides-history",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rides",
+								"my-rides-history"
+							],
+							"query": [
+								{
+									"key": "searchTerm",
+									"value": "Enjoy",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Chattogram",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "amid",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "location,-title",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "-title,-location",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "picturesque",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "Dhaka",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "Embark",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "location",
+									"disabled": true
+								},
+								{
+									"key": "searchTerm",
+									"value": "scenic",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Ride",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2MzI2NCwiZXhwIjoxNzU0MzQ5NjY0fQ.yzAFi_BpQoJeimo-739VVWE7pAQyZVUWRkoqvWpQ7lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/rides/688f6e812394d17eba326d7b/cancel",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"rides",
+								"688f6e812394d17eba326d7b",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDM1MjM2NywiZXhwIjoxNzU0NDM4NzY3fQ.CttHOhw74NHpX1WrU9YuOnqUZteLmpH0r7kGAiqpc1g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rider\": \"688e23885640b74ece4a5fba\",\r\n    \"driver\": \"688e80d10d445f44b4df6f32\",\r\n    \"ride\": \"688fbfa5c9cc9ca83ab8e39a\",\r\n    \"riderCount\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/booking",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDM1MjIzMiwiZXhwIjoxNzU0NDM4NjMyfQ.d0rjf0-QgZd_qIv9_6tH33-pADh7nJ-g9YuvYNx1jxs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/booking",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Booking",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDMxMDQyMSwiZXhwIjoxNzU0Mzk2ODIxfQ.AFGsgBpOOBQ9AToGTPdNCzpxaVRwNFIdqtk20XUVUHw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/booking/my-bookings",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"my-bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Booking By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDI1MjI3MSwiZXhwIjoxNzU0MzM4NjcxfQ.LFxFyzKmeBDvkZsybP4HCgsq99_H43mWIInI8Iq1JKE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/booking/688fb72875939b34939cfa52",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"688fb72875939b34939cfa52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI1NjQzOSwiZXhwIjoxNzU0MzQyODM5fQ.pnGeEzohpUu_XJJWHl6JJs0a6OtvqtkDs6ZptEF-5jA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"COMPLETE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/booking/688fb72875939b34939cfa52/status",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"booking",
+								"688fb72875939b34939cfa52",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Payment for a Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2MzI2NCwiZXhwIjoxNzU0MzQ5NjY0fQ.yzAFi_BpQoJeimo-739VVWE7pAQyZVUWRkoqvWpQ7lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/payment/init-payment/688fb72875939b34939cfa52",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"init-payment",
+								"688fb72875939b34939cfa52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invoice Download URL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODcwMThlM2JlNWNlMjk2M2I1MTY2MzgiLCJlbWFpbCI6InNhbWluaXNyYXIxQGdtYWlsLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUzMzAyOTgyLCJleHAiOjE3NTMzODkzODJ9.j1AxXbC8cYAHEmXsv_2c-b8JeY0w3LWJ0maoAolDdMw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/payment/invoice/68825e8bd448f0c7ad16107e",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"payment",
+								"invoice",
+								"68825e8bd448f0c7ad16107e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OTP",
+			"item": [
+				{
+					"name": "Send OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Tanjida Tahmina\",\r\n    \"email\" : \"mity2027@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/otp/send",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Otp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhlMjM4ODU2NDBiNzRlY2U0YTVmYmEiLCJlbWFpbCI6Im1pdHkyMDI3QGdtYWlsLmNvbSIsInJvbGUiOiJSSURFUiIsImlhdCI6MTc1NDE0NTY3MiwiZXhwIjoxNzU0MjMyMDcyfQ.5_GZZCOnI5t4iJH3KFgB9hF0g_zuLSnD06a4yH1wOHs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"mity2027@gmail.com\",\r\n    \"otp\" : \"347843\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/otp/verify",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"otp",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Users Stats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2MzI2NCwiZXhwIjoxNzU0MzQ5NjY0fQ.yzAFi_BpQoJeimo-739VVWE7pAQyZVUWRkoqvWpQ7lc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/stats/user",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stats",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ride Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2ODc1OCwiZXhwIjoxNzU0MzU1MTU4fQ.tvD1tGX20yAwyizOU4pL59_1DpsPzScwLgJldlBNu5A",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/stats/ride",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stats",
+								"ride"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Driver Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2ODc1OCwiZXhwIjoxNzU0MzU1MTU4fQ.tvD1tGX20yAwyizOU4pL59_1DpsPzScwLgJldlBNu5A",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/stats/driver",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stats",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking Stats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2ODc1OCwiZXhwIjoxNzU0MzU1MTU4fQ.tvD1tGX20yAwyizOU4pL59_1DpsPzScwLgJldlBNu5A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/stats/booking",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stats",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODhkNDI0ZmVhYzNkNDJlNGIyMWJiMWQiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc1NDI2ODc1OCwiZXhwIjoxNzU0MzU1MTU4fQ.tvD1tGX20yAwyizOU4pL59_1DpsPzScwLgJldlBNu5A",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://next-fifth-assignment-backend-production.up.railway.app/api/v1/stats/payment",
+							"protocol": "https",
+							"host": [
+								"next-fifth-assignment-backend-production",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"api",
+								"v1",
+								"stats",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -3,27 +3,39 @@
 A secure, role-based backend API for managing a ride-booking system built with **Node.js**, **Express**, **MongoDB**, and **TypeScript**.
 
 # Live Link
-# []()
+# [https://next-fifth-assignment-backend-production.up.railway.app/](https://next-fifth-assignment-backend-production.up.railway.app/)
+
 ## 🚀 Features
 
-- 🔐 JWT-based Authentication with Roles (Admin, Rider(default), Driver)
-- 🧂 Secure Password Hashing (bcrypt)
-- 📍 Rider:
-  - Request/cancel rides with pickup & destination locations
-  - View ride history
-  - 🚗 Driver:
-  - Update ride statuses 
-  - accept/cancel rides
-  - 🧑‍⚖️ Admin:
-  - View/manage users, drivers, and rides
-  - Approve/suspend drivers
-  - Block/unblock users
-  - 📊 Admin dashboard
-  - 🗺️ Geo-based driver search
-  - 🎯 Ride Lifecycle Management with complete history
-  - ✅ Role-based route protection with authorization middleware
-  - 🧠 Clean, modular architecture with Type Safety
+### 🔐 Authentication & Authorization
+- 🗯 JWT-based Authentication with Roles (Admin, Rider, Driver)
+- 🎯 Secure Password Hashing using bcrypt
+- ✅ Role-Based Route Protection with Authorization Middleware
 
+### 🧑‍💼 Rider Features
+- 🚖 Request/Cancel Rides with Pickup & Destination Locations
+- 🕓 View Ride History
+- 💳 Secure Payments via Integrated Payment Gateway (using SSLCommerz)
+- 🎯 Full Ride Lifecycle Management with History Tracking
+
+### 🚗 Driver Features
+- ✅ Accept/Cancel Ride Requests
+- 🔄 Update Ride Status 
+- 📍 Geo-based Driver Search
+
+### 🧑‍⚖️ Admin Features
+- 👥 View & Manage Users, Drivers, Rides and Bookings
+- ✔️ Approve/Suspend Drivers
+- 🚫 Block/Unblock Users
+- 📊 Admin Dashboard with User, Ride, Driver, Booking and Payment  Analytics
+
+
+### 📦 Infrastructure & Enhancements
+- 🧠 Clean, Modular Architecture with Full Type Safety
+- ☁️ Upload/View Invoice PDFs & images (stored on Cloudinary via multer)
+- 📩 Send Invoice PDF & OTP via Email (using nodemailer)
+- 🔁 OTP Storage with Redis for Expiration & Verification Logic
+- 🚀 Optimized for Scalability & Maintainability
 ---
 
 ## 🛠️ Tech Stack
@@ -88,6 +100,7 @@ Follow these steps to run the project locally:
 
 - `GET /api/v1/user/me` Get current logged-in user
 - `PATCH /api/v1/user/:id` Update user profile
+- `DELETE /api/v1/user/:id` Delete user profile
 ---
 
 ### Auth
