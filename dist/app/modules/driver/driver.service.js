@@ -20,7 +20,7 @@ const createDriver = (payload) => __awaiter(void 0, void 0, void 0, function* ()
     return driver;
 });
 const getAllDrivers = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const queryBuilder = new QueryBuilder_1.QueryBuilder(driver_model_1.Driver.find({ role: "driver" }), query);
+    const queryBuilder = new QueryBuilder_1.QueryBuilder(driver_model_1.Driver.find({ role: "DRIVER" }), query);
     const driversData = queryBuilder
         .filter()
         .search(driver_constant_1.driverSearchableFields)

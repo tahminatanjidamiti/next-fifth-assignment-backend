@@ -11,7 +11,7 @@ const createDriver = async (payload: IDriver): Promise<IDriver> => {
 };
 
 const getAllDrivers = async (query: Record<string, string>) => {
-  const queryBuilder = new QueryBuilder<IDriver>(Driver.find({ role: "driver" }), query);
+  const queryBuilder = new QueryBuilder<IDriver>(Driver.find({ role: "DRIVER" }), query);
 
   const driversData = queryBuilder
     .filter()

@@ -1,4 +1,4 @@
-export const driverSearchableFields = ["name", "email", "phoneNumber", "driverProfile"];
+export const driverSearchableFields = ["name", "email", "phoneNumber"];
 
 export const defaultDriverProfile = {
   approved: false,

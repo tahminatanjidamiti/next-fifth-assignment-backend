@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultDriverProfile = exports.driverSearchableFields = void 0;
-exports.driverSearchableFields = ["name", "email", "phoneNumber", "driverProfile"];
+exports.driverSearchableFields = ["name", "email", "phoneNumber"];
 exports.defaultDriverProfile = {
     approved: false,
     isOnline: false,

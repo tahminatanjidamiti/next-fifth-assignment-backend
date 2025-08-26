@@ -122,7 +122,7 @@ Follow these steps to run the project locally:
 - `GET /api/v1/drivers` List all drivers (with filters)
 
 **Query Parameters:**
-- `searchTerm` Keyword search
+- `search` Keyword search
 - `limit` Number of drivers
 - `page` Page number
 - `sortBy` e.g. `createdAt`
