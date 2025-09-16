@@ -18,6 +18,8 @@ const driver_service_1 = require("./driver.service");
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 const sendResponse_1 = require("../../utils/sendResponse");
 const AppError_1 = __importDefault(require("../../errorHelpers/AppError"));
+const driver_model_1 = require("./driver.model");
+const user_interface_1 = require("../user/user.interface");
 const createDriver = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newDriver = yield driver_service_1.DriverService.createDriver(req.body);
     (0, sendResponse_1.sendResponse)(res, {
@@ -94,9 +96,19 @@ const getDriverByNear = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(voi
         data: nearestDriver,
     });
 }));
-const getDriverById = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const result = yield driver_service_1.DriverService.getDriverById(id);
+const getDriverMe = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.userId;
+    const driverDoc = yield driver_model_1.Driver.findOne({ riderId: userId });
+    if (!driverDoc) {
+        return (0, sendResponse_1.sendResponse)(res, {
+            statusCode: http_status_codes_1.default.NOT_FOUND,
+            success: false,
+            message: "Driver profile not found",
+            data: [],
+        });
+    }
+    const _id = driverDoc._id.toString();
+    const result = yield driver_service_1.DriverService.getDriverMe(_id);
     (0, sendResponse_1.sendResponse)(res, {
         success: true,
         statusCode: http_status_codes_1.default.OK,
@@ -104,11 +116,30 @@ const getDriverById = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
         data: result.data
     });
 }));
+const getDriverStatsMe = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.userId;
+    const driverDoc = yield driver_model_1.Driver.findOne({ riderId: userId });
+    if (!driverDoc) {
+        return (0, sendResponse_1.sendResponse)(res, {
+            statusCode: http_status_codes_1.default.NOT_FOUND,
+            success: false,
+            message: "Driver profile not found",
+            data: [],
+        });
+    }
+    const driverId = driverDoc._id.toString();
+    const stats = yield driver_service_1.DriverService.getDriverStatsMe(driverId);
+    (0, sendResponse_1.sendResponse)(res, {
+        statusCode: http_status_codes_1.default.OK,
+        success: true,
+        message: "Driver stats fetched successfully",
+        data: stats,
+    });
+}));
 const updateDriverStatus = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const role = req.user.role;
-    const userId = req.user.id;
-    if (role === 'DRIVER' && id !== userId) {
+    if (role !== user_interface_1.Role.DRIVER && role !== user_interface_1.Role.ADMIN) {
         throw new AppError_1.default(http_status_codes_1.default.FORBIDDEN, "Access denied.");
     }
     const updatedDriver = yield driver_service_1.DriverService.updateDriverStatus(id, req.body);
@@ -123,6 +154,7 @@ exports.DriverController = {
     createDriver,
     getAllDrivers,
     getDriverByNear,
-    getDriverById,
+    getDriverMe,
+    getDriverStatsMe,
     updateDriverStatus
 };

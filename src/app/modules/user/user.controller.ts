@@ -8,13 +8,13 @@ import { sendResponse } from "../../utils/sendResponse";
 import { JwtPayload } from "jsonwebtoken";
 import { createUserTokens } from "../../utils/userTokens";
 import { setAuthCookie } from "../../utils/setCookie";
+import { IUser } from "./user.interface";
 
 
 
 const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-
+    
     const user = await UserServices.createUser(req.body)
-
     const userTokens = await createUserTokens(user)
 
     setAuthCookie(res, userTokens)
@@ -35,9 +35,12 @@ const createUser = catchAsync(async (req: Request, res: Response, next: NextFunc
 
 const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
-    const userId = req.params.id;
+    const payload: IUser = {
+        ...req.body,
+        picture: req.file?.path
+    }
+    const userId = (req.user as JwtPayload).userId;
     const verifiedToken = req.user;
-    const payload = req.body;
     const user = await UserServices.updateUser(userId, payload, verifiedToken as JwtPayload)
 
     sendResponse(res, {

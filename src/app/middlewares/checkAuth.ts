@@ -31,7 +31,7 @@ export const checkAuth = (...authRoles: string[]) =>  async (req: Request, res: 
         }
     
         if (isUserExist.isActive === IsActive.BLOCKED || isUserExist.isActive === IsActive.INACTIVE) {
-            throw new AppError(httpStatus.BAD_REQUEST, `User is ${isUserExist.isActive}`)
+            throw new AppError(httpStatus.BAD_REQUEST, `User is ${isUserExist.isActive}, please try to connect with admin for further get access to desire page!`)
         }
     
         if (isUserExist.isDeleted) {

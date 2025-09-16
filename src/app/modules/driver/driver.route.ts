@@ -7,15 +7,16 @@ import { driverRegistrationZodSchema, updateDriverStatusZodSchema } from "./driv
 
 const router = Router();
 
-router.post("/create",validateRequest(driverRegistrationZodSchema),  checkAuth(Role.ADMIN), DriverController.createDriver);
-router.get("/", checkAuth(Role.ADMIN), DriverController.getAllDrivers);
+router.post("/create",validateRequest(driverRegistrationZodSchema),  checkAuth(...Object.values(Role)), DriverController.createDriver);
+router.get("/", checkAuth(...Object.values(Role)), DriverController.getAllDrivers);
 router.get("/nearest", checkAuth(...Object.values(Role)), DriverController.getDriverByNear);
+router.get("/stats/me", checkAuth(Role.ADMIN, Role.DRIVER), DriverController.getDriverStatsMe);
 router.patch(
   "/:id/status",
   validateRequest(updateDriverStatusZodSchema),
   checkAuth(Role.ADMIN, Role.DRIVER),
   DriverController.updateDriverStatus
 );
-router.get("/:id", checkAuth(...Object.values(Role)), DriverController.getDriverById);
+router.get("/me", checkAuth(...Object.values(Role)), DriverController.getDriverMe);
 
 export const DriverRoutes = router;

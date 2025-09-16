@@ -22,7 +22,7 @@ exports.createRideZodSchema = zod_1.default.object({
     status: zod_1.default
         .enum(Object.values(ride_interface_1.RideStatus))
         .optional(),
-    fare: zod_1.default.number().min(0).optional(),
+    fare: zod_1.default.number().min(0),
     distanceKm: zod_1.default.number().min(0).optional(),
     estimatedTime: zod_1.default.number().min(0).optional(),
 });

@@ -1,1 +1,1 @@
-export const rideSearchableFields = ["status", "pickupLocation", "dropoffLocation"];
+export const rideSearchableFields = ["status", "pickupLocation.formattedAddress", "dropoffLocation.formattedAddress"];

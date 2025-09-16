@@ -25,6 +25,7 @@ const cloudinary_config_1 = require("../../config/cloudinary.config");
 const invoice_1 = require("../../utils/invoice");
 const booking_model_1 = require("../booking/booking.model");
 const ride_model_1 = require("../ride/ride.model");
+const driver_model_1 = require("../driver/driver.model");
 const initPayment = (bookingId) => __awaiter(void 0, void 0, void 0, function* () {
     const payment = yield payment_model_1.Payment.findOne({ booking: bookingId });
     if (!payment) {
@@ -66,8 +67,16 @@ const successPayment = (query) => __awaiter(void 0, void 0, void 0, function* ()
         if (!updatedBooking) {
             throw new AppError_1.default(401, "Booking not found");
         }
-        yield ride_model_1.Ride.findByIdAndUpdate((_a = updatedBooking.ride) === null || _a === void 0 ? void 0 : _a._id, { status: "COMPLETED" }, // or use RideStatus.COMPLETED if you have enum
+        const ride = yield ride_model_1.Ride.findByIdAndUpdate((_a = updatedBooking.ride) === null || _a === void 0 ? void 0 : _a._id, { status: "COMPLETED" }, // or use RideStatus.COMPLETED if you have enum
         { session });
+        // ✅ Update driver stats dynamically
+        if ((ride === null || ride === void 0 ? void 0 : ride.driverId) && (ride === null || ride === void 0 ? void 0 : ride.fare) && (updatedBooking === null || updatedBooking === void 0 ? void 0 : updatedBooking.riderCount)) {
+            yield driver_model_1.Driver.findByIdAndUpdate(ride.driverId, {
+                $inc: {
+                    "driverProfile.earnings": ride.fare * updatedBooking.riderCount,
+                },
+            }, { new: true, session });
+        }
         const invoiceData = {
             bookingDate: updatedBooking.createdAt,
             riderCount: updatedBooking.riderCount,

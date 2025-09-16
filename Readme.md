@@ -62,7 +62,10 @@ src/
 │   ├── booking/              # Booking-specific logic 
 │   ├── payment/              # Payment processing, history
 │   ├── stats/                # Admin dashboard stats, reports
-│   ├── otp/                  # OTP logic for verification 
+│   ├── otp/                  # OTP logic for 
+event
+│   ├── sos/                  # SOS event logic 
+verification 
 │   └── sslcommerz/           # Integration with SSLCommerz payment gateway
 
 ├── middlewares/             # Auth, role guards, error handlers
@@ -107,6 +110,11 @@ Follow these steps to run the project locally:
 - `POST /api/v1/otp/send` Send OTP to user
 - `POST /api/v1/otp/verify` Verify OTP 
 
+### SOS
+- `POST /api/v1/sos` SOS Send user
+- `POST /api/v1/sos/:id/update` Update SOS 
+- `POST /api/v1/otp/end` End SOS 
+
 ### Auth
 - `POST /api/v1/auth/login` Login
 - `POST /api/v1/auth/logout` Logout
@@ -120,6 +128,7 @@ Follow these steps to run the project locally:
 ### Drivers
 - `POST /api/v1/drivers/create` Create a driver profile
 - `GET /api/v1/drivers` List all drivers (with filters)
+- `GET /api/v1/drivers/stats/me` Get driver earnings statistics
 
 **Query Parameters:**
 - `search` Keyword search

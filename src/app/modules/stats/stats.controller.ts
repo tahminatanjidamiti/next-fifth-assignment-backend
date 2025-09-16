@@ -57,6 +57,8 @@ const getDriverStats = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+
 export const StatsController = {
   getBookingStats,
   getPaymentStats,

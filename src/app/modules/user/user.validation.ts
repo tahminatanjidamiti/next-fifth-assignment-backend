@@ -9,7 +9,6 @@ export const createUserZodSchema = z.object({
         .max(50, { message: "Name cannot exceed 50 characters." }),
 
     email: z
-        .string()
         .email({ message: "Invalid email address format." })
         .min(5, { message: "Email must be at least 5 characters long." })
         .max(100, { message: "Email cannot exceed 100 characters." }),
@@ -54,18 +53,15 @@ export const updateUserZodSchema = z.object({
                 "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
         })
         .optional(),
+    picture: z.string().optional(),
 
     role: z
         .enum(Object.values(Role) as [string])
         .optional(),
 
     location: z.object({
-        lat: z.number({
-            message: "Latitude is required",
-        }),
-        lng: z.number({
-            message: "Longitude is required",
-        }),
+        lat: z.number({ message: "Latitude is required" }),
+        lng: z.number({ message: "Longitude is required" }),
         formattedAddress: z.string().optional(),
     }).optional(),
 

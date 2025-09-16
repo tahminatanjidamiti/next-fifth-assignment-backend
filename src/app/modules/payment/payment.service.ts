@@ -13,6 +13,7 @@ import { generatePdf, IInvoiceData } from "../../utils/invoice";
 import { RideBooking } from "../booking/booking.model";
 import { IRide } from "../ride/ride.interface";
 import { Ride } from "../ride/ride.model";
+import { Driver } from "../driver/driver.model";
 
 const initPayment = async (bookingId: string) => {
 
@@ -71,11 +72,25 @@ const successPayment = async (query: Record<string, string>) => {
         if (!updatedBooking) {
             throw new AppError(401, "Booking not found")
         }
-        await Ride.findByIdAndUpdate(
+        const ride = await Ride.findByIdAndUpdate(
             updatedBooking.ride?._id,
             { status: "COMPLETED" }, // or use RideStatus.COMPLETED if you have enum
             { session }
         );
+
+        // ✅ Update driver stats dynamically
+        if (ride?.driverId && ride?.fare && updatedBooking?.riderCount) {
+            await Driver.findByIdAndUpdate(
+                ride.driverId,
+                {
+                    $inc: {
+                        "driverProfile.earnings": ride.fare * updatedBooking.riderCount,
+                    },
+                },
+                { new: true, session }
+            );
+        }
+
 
 
         const invoiceData: IInvoiceData = {

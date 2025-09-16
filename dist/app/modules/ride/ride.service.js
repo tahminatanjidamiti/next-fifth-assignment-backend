@@ -19,9 +19,18 @@ const QueryBuilder_1 = require("../../utils/QueryBuilder");
 const ride_constant_1 = require("./ride.constant");
 const AppError_1 = __importDefault(require("../../errorHelpers/AppError"));
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
+const driver_model_1 = require("../driver/driver.model");
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const requestRide = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield ride_model_1.Ride.create(payload);
+    // 1. Create the ride
+    const ride = yield ride_model_1.Ride.create(payload);
+    // 2. Increment driver's totalRides
+    if (payload.driverId) {
+        yield driver_model_1.Driver.findByIdAndUpdate(payload.driverId, {
+            $inc: { "driverProfile.totalRides": 1 },
+        });
+    }
+    return ride;
 });
 const getAllRides = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const queryBuilder = new QueryBuilder_1.QueryBuilder(ride_model_1.Ride.find(), query);
@@ -53,10 +62,19 @@ const cancelRide = (rideId) => __awaiter(void 0, void 0, void 0, function* () {
     }
     ride.status = ride_interface_1.RideStatus.CANCELLED;
     yield ride.save();
+    // update driver stats
+    if (ride.driverId) {
+        yield driver_model_1.Driver.findByIdAndUpdate(ride.driverId, {
+            $inc: {
+                "driverProfile.cancelAttempts": 1,
+                "driverProfile.totalRides": -1, // decrement by 1
+            },
+        });
+    }
     return ride;
 });
-const getMyRideHistory = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const rides = yield ride_model_1.Ride.find({ riderId: userId })
+const getMyRideHistory = (filter) => __awaiter(void 0, void 0, void 0, function* () {
+    const rides = yield ride_model_1.Ride.find(filter).select("pickupLocation dropoffLocation fare status createdAt")
         .populate("riderId", "name email phone role isActive locaton bookings")
         .populate("driverId", "name email phone role driverProfile")
         .sort({ createdAt: -1 });

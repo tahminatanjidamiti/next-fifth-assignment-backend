@@ -22,6 +22,11 @@ const userSchema = new mongoose_1.Schema({
     phone: { type: String },
     picture: { type: String },
     address: { type: String },
+    location: {
+        lat: { type: Number },
+        lng: { type: Number },
+        formattedAddress: { type: String },
+    },
     isDeleted: { type: Boolean, default: false },
     isActive: {
         type: String,

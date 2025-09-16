@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { BookingService } from "./booking.service";
 import httpStatus from "http-status-codes";
+import { Driver } from "../driver/driver.model";
+import { JwtPayload } from "jsonwebtoken";
 // import AppError from "../../errorHelpers/AppError";
 
 
@@ -19,7 +20,26 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
 
 const getUserBookings = catchAsync(async (req: Request, res: Response) => {
   const userId = (req.user as JwtPayload).userId;
-  const bookings = await BookingService.getUserBookings(userId);
+    const role = req.user.role;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query: Record<string, any> = {};
+
+    if (role === "RIDER") {
+      query = { rider: userId };
+    } else if (role === "DRIVER") {
+      const driverDoc = await Driver.findOne({ riderId: userId });
+      if (!driverDoc) {
+      return sendResponse(res, {
+        statusCode: httpStatus.NOT_FOUND,
+        success: false,
+        message: "Driver profile not found",
+        data: [],
+      });
+    }
+      query = { driver: driverDoc._id };
+    }
+  const bookings = await BookingService.getUserBookings(query);
   
   sendResponse(res, {
     statusCode: httpStatus.OK,

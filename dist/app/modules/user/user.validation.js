@@ -13,7 +13,6 @@ exports.createUserZodSchema = zod_1.default.object({
         .min(2, { message: "Name must be at least 2 characters long." })
         .max(50, { message: "Name cannot exceed 50 characters." }),
     email: zod_1.default
-        .string()
         .email({ message: "Invalid email address format." })
         .min(5, { message: "Email must be at least 5 characters long." })
         .max(100, { message: "Email cannot exceed 100 characters." }),
@@ -51,16 +50,13 @@ exports.updateUserZodSchema = zod_1.default.object({
         message: "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
     })
         .optional(),
+    picture: zod_1.default.string().optional(),
     role: zod_1.default
         .enum(Object.values(user_interface_1.Role))
         .optional(),
     location: zod_1.default.object({
-        lat: zod_1.default.number({
-            message: "Latitude is required",
-        }),
-        lng: zod_1.default.number({
-            message: "Longitude is required",
-        }),
+        lat: zod_1.default.number({ message: "Latitude is required" }),
+        lng: zod_1.default.number({ message: "Longitude is required" }),
         formattedAddress: zod_1.default.string().optional(),
     }).optional(),
     isActive: zod_1.default

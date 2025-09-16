@@ -29,8 +29,7 @@ export const driverRegistrationZodSchema = z.object({
     .max(50, { message: "Name cannot exceed 50 characters." }).optional(),
 
   email: z
-    .string()
-    .email({ message: "Invalid email address format." })
+    .email()
     .min(5, { message: "Email must be at least 5 characters long." })
     .max(100, { message: "Email cannot exceed 100 characters." }),
 
@@ -46,7 +45,7 @@ export const driverRegistrationZodSchema = z.object({
     .optional(),
   riderId: z.string(),
   location: z.object({
-    type: z.literal("Point").optional(),
+    type: z.literal("Point").default("Point"),
     coordinates: z
       .array(z.number())
       .length(2, { message: "Coordinates must be [lng, lat]" }),
@@ -57,11 +56,8 @@ export const driverRegistrationZodSchema = z.object({
 });
 
 
+
 export const updateDriverStatusZodSchema = z.object({
-  isOnline: z.boolean().optional(),
-  approved: z.boolean().optional(),
-  earnings: z.number().optional(),
-  rating: z.number().optional(),
-  totalRides: z.number().optional(),
-  cancelAttempts: z.number().optional(),
+    isOnline: z.boolean().optional(),
+    approved: z.boolean().optional(),
 });

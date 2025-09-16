@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { ILocation } from "../ride/ride.interface";
 
 export enum Role {
   ADMIN = "ADMIN",
@@ -10,11 +11,6 @@ export enum IsActive {
   ACTIVE = "ACTIVE",
   BLOCKED = "BLOCKED",
   INACTIVE = "INACTIVE",
-}
-export interface ILocation {
-  lat: number;
-  lng: number;
-  formattedAddress?: string;
 }
 
 export interface IUser {

@@ -73,9 +73,11 @@ const createRideBooking = (payload) => __awaiter(void 0, void 0, void 0, functio
         throw error;
     }
 });
-const getUserBookings = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const bookings = yield booking_model_1.RideBooking.find({ rider: userId })
-        .populate("ride", "riderId driverId fare")
+const getUserBookings = (filter) => __awaiter(void 0, void 0, void 0, function* () {
+    const bookings = yield booking_model_1.RideBooking.find(filter)
+        .populate("ride", "riderId driverId fare pickupLocation dropoffLocation")
+        .populate("driver", "name email")
+        .populate("rider", "name email")
         .populate("payment")
         .sort({ createdAt: -1 });
     return bookings;
@@ -84,7 +86,8 @@ const getBookingById = (bookingId) => __awaiter(void 0, void 0, void 0, function
     const booking = yield booking_model_1.RideBooking.findById(bookingId)
         .populate("ride", "riderId driverId fare")
         .populate("payment")
-        .populate("rider", "name email phone address");
+        .populate("rider", "name email phone address")
+        .populate("driver", "name email phone address");
     if (!booking) {
         throw new AppError_1.default(http_status_codes_1.default.NOT_FOUND, "Booking not found");
     }

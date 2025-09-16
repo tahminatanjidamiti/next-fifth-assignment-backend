@@ -22,7 +22,7 @@ export const createRideZodSchema = z.object({
     .enum(Object.values(RideStatus) as [string])
     .optional(),
 
-  fare: z.number().min(0).optional(),
+  fare: z.number().min(0),
 
   distanceKm: z.number().min(0).optional(),
 

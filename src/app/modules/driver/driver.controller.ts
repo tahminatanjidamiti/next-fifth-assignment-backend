@@ -4,6 +4,9 @@ import { DriverService } from "./driver.service";
 import httpStatus from "http-status-codes";
 import { sendResponse } from "../../utils/sendResponse";
 import AppError from "../../errorHelpers/AppError";
+import { Driver } from "./driver.model";
+import { JwtPayload } from "jsonwebtoken";
+import { Role } from "../user/user.interface";
 
 const createDriver = catchAsync(async (req: Request, res: Response) => {
   const newDriver = await DriverService.createDriver(req.body);
@@ -103,28 +106,58 @@ const getDriverByNear = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getDriverById = catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
-    const result = await DriverService.getDriverById(id);
-    sendResponse(res, {
-        success: true,
-        statusCode: httpStatus.OK,
-        message: "Driver Retrieved Successfully",
-        data: result.data
-    })
+const getDriverMe = catchAsync(async (req: Request, res: Response) => {
+  const userId = (req.user as JwtPayload).userId;
+  const driverDoc = await Driver.findOne({ riderId: userId });
+  if (!driverDoc) {
+      return sendResponse(res, {
+        statusCode: httpStatus.NOT_FOUND,
+        success: false,
+        message: "Driver profile not found",
+        data: [],
+      });
+    }
+  const _id = driverDoc._id.toString();
+  const result = await DriverService.getDriverMe(_id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Driver Retrieved Successfully",
+    data: result.data
+  })
 })
+const getDriverStatsMe = catchAsync(async (req: Request, res: Response) => {
+  const userId = (req.user as JwtPayload).userId;
+    const driverDoc = await Driver.findOne({ riderId: userId });
+    if (!driverDoc) {
+        return sendResponse(res, {
+          statusCode: httpStatus.NOT_FOUND,
+          success: false,
+          message: "Driver profile not found",
+          data: [],
+        });
+      }
+    const driverId = driverDoc._id.toString();
 
+  const stats = await DriverService.getDriverStatsMe(driverId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Driver stats fetched successfully",
+    data: stats,
+  });
+});
 const updateDriverStatus = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const role = req.user.role;
-  const userId = req.user.id;
 
-  if (role === 'DRIVER' && id !== userId) {
-    throw new AppError(httpStatus.FORBIDDEN, "Access denied.");
-  }
+  if (role !== Role.DRIVER && role !== Role.ADMIN) {
+  throw new AppError(httpStatus.FORBIDDEN, "Access denied.");
+}
 
   const updatedDriver = await DriverService.updateDriverStatus(id, req.body);
-  
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -138,6 +171,7 @@ export const DriverController = {
   createDriver,
   getAllDrivers,
   getDriverByNear,
-  getDriverById,
+  getDriverMe,
+  getDriverStatsMe,
   updateDriverStatus
 };

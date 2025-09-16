@@ -13,5 +13,5 @@ router.get("/booking", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), 
 router.get("/payment", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), stats_controller_1.StatsController.getPaymentStats);
 router.get("/user", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), stats_controller_1.StatsController.getUserStats);
 router.get("/ride", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), stats_controller_1.StatsController.getRideStats);
-router.get("/driver", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), stats_controller_1.StatsController.getDriverStats);
+router.get("/driver", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN, user_interface_1.Role.DRIVER), stats_controller_1.StatsController.getDriverStats);
 exports.StatsRoutes = router;

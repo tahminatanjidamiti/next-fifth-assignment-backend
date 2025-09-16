@@ -86,7 +86,7 @@ const getRideStats = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 const getDriverStats = (driverId) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const [totalRides, completedRides, earnings, recentRides, totalDrivers,] = yield Promise.all([
+    const [totalRides, completedRides, earnings, recentRides, totalDrivers, dailyEarnings, weeklyEarnings, monthlyEarnings,] = yield Promise.all([
         ride_model_1.Ride.countDocuments({ driver: driverId }),
         ride_model_1.Ride.countDocuments({ driver: driverId, status: "COMPLETED" }),
         payment_model_1.Payment.aggregate([
@@ -98,6 +98,39 @@ const getDriverStats = (driverId) => __awaiter(void 0, void 0, void 0, function*
             .limit(5)
             .select("pickupLocation dropoffLocation distanceKm status createdAt"),
         driver_model_1.Driver.countDocuments(),
+        // 📊 Daily earnings
+        payment_model_1.Payment.aggregate([
+            { $match: { driver: driverId, status: payment_interface_1.PAYMENT_STATUS.PAID } },
+            {
+                $group: {
+                    _id: { day: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } } },
+                    total: { $sum: "$amount" },
+                },
+            },
+            { $sort: { "_id.day": 1 } },
+        ]),
+        // 📊 Weekly earnings
+        payment_model_1.Payment.aggregate([
+            { $match: { driver: driverId, status: payment_interface_1.PAYMENT_STATUS.PAID } },
+            {
+                $group: {
+                    _id: { week: { $isoWeek: "$createdAt" }, year: { $year: "$createdAt" } },
+                    total: { $sum: "$amount" },
+                },
+            },
+            { $sort: { "_id.year": 1, "_id.week": 1 } },
+        ]),
+        // 📊 Monthly earnings
+        payment_model_1.Payment.aggregate([
+            { $match: { driver: driverId, status: payment_interface_1.PAYMENT_STATUS.PAID } },
+            {
+                $group: {
+                    _id: { month: { $month: "$createdAt" }, year: { $year: "$createdAt" } },
+                    total: { $sum: "$amount" },
+                },
+            },
+            { $sort: { "_id.year": 1, "_id.month": 1 } },
+        ]),
     ]);
     return {
         totalRides,
@@ -105,6 +138,17 @@ const getDriverStats = (driverId) => __awaiter(void 0, void 0, void 0, function*
         totalEarnings: ((_a = earnings === null || earnings === void 0 ? void 0 : earnings[0]) === null || _a === void 0 ? void 0 : _a.total) || 0,
         recentRides,
         totalDrivers,
+        charts: {
+            daily: dailyEarnings.map(d => ({ date: d._id.day, earnings: d.total })),
+            weekly: weeklyEarnings.map(d => ({
+                week: `${d._id.year}-W${d._id.week}`,
+                earnings: d.total,
+            })),
+            monthly: monthlyEarnings.map(d => ({
+                month: `${d._id.year}-${d._id.month}`,
+                earnings: d.total,
+            })),
+        },
     };
 });
 const getBookingStats = () => __awaiter(void 0, void 0, void 0, function* () {

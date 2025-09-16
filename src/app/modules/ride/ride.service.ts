@@ -4,11 +4,23 @@ import { QueryBuilder } from "../../utils/QueryBuilder";
 import { rideSearchableFields } from "./ride.constant";
 import AppError from "../../errorHelpers/AppError";
 import httpStatus from "http-status-codes";
+import { FilterQuery } from "mongoose";
+import { Driver } from "../driver/driver.model";
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const requestRide = async (payload: any) => {
-  return await Ride.create(payload);
+  // 1. Create the ride
+  const ride = await Ride.create(payload);
+
+  // 2. Increment driver's totalRides
+  if (payload.driverId) {
+    await Driver.findByIdAndUpdate(payload.driverId, {
+      $inc: { "driverProfile.totalRides": 1 },
+    });
+  }
+
+  return ride;
 };
 
 const getAllRides = async (query: Record<string, string>) => {
@@ -30,7 +42,7 @@ const getAllRides = async (query: Record<string, string>) => {
     data,
     meta,
   };
-}; 
+};
 
 const cancelRide = async (rideId: string) => {
   const ride = await Ride.findById(rideId);
@@ -49,11 +61,25 @@ const cancelRide = async (rideId: string) => {
 
   ride.status = RideStatus.CANCELLED;
   await ride.save();
+
+  // update driver stats
+  if (ride.driverId) {
+    await Driver.findByIdAndUpdate(
+      ride.driverId,
+      {
+        $inc: {
+          "driverProfile.cancelAttempts": 1,
+          "driverProfile.totalRides": -1, // decrement by 1
+        },
+      }
+    );
+  }
+
   return ride;
 };
 
-const getMyRideHistory = async (userId: string) => {
-  const rides = await Ride.find({ riderId: userId })
+const getMyRideHistory = async (filter: FilterQuery<IRide>) => {
+  const rides = await Ride.find(filter).select("pickupLocation dropoffLocation fare status createdAt")
     .populate("riderId", "name email phone role isActive locaton bookings")
     .populate("driverId", "name email phone role driverProfile")
     .sort({ createdAt: -1 });
@@ -63,8 +89,8 @@ const getMyRideHistory = async (userId: string) => {
 
 
 export const rideService = {
-    requestRide,
-    getAllRides,
-    cancelRide,
-    getMyRideHistory
+  requestRide,
+  getAllRides,
+  cancelRide,
+  getMyRideHistory
 }

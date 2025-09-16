@@ -10,6 +10,7 @@ const oto_route_1 = require("../modules/otp/oto.route");
 const stats_route_1 = require("../modules/stats/stats.route");
 const driver_route_1 = require("../modules/driver/driver.route");
 const ride_route_1 = require("../modules/ride/ride.route");
+const sos_route_1 = require("../modules/sos/sos.route");
 exports.router = (0, express_1.Router)();
 const moduleRoutes = [
     {
@@ -39,6 +40,10 @@ const moduleRoutes = [
     {
         path: "/otp",
         route: oto_route_1.OtpRoutes
+    },
+    {
+        path: "/sos",
+        route: sos_route_1.SosRoutes
     },
     {
         path: "/stats",

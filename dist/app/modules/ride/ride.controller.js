@@ -17,6 +17,7 @@ const http_status_codes_1 = __importDefault(require("http-status-codes"));
 const sendResponse_1 = require("../../utils/sendResponse");
 const ride_service_1 = require("./ride.service");
 const catchAsync_1 = require("../../utils/catchAsync");
+const driver_model_1 = require("../driver/driver.model");
 // 1. Rider requests a ride
 const requestRide = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const payload = req.body;
@@ -44,7 +45,25 @@ const cancelRide = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, 
 }));
 const getMyRideHistory = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.user.userId;
-    const bookings = yield ride_service_1.rideService.getMyRideHistory(userId);
+    const role = req.user.role;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let query = {};
+    if (role === "RIDER") {
+        query = { riderId: userId };
+    }
+    else if (role === "DRIVER") {
+        const driverDoc = yield driver_model_1.Driver.findOne({ riderId: userId });
+        if (!driverDoc) {
+            return (0, sendResponse_1.sendResponse)(res, {
+                statusCode: http_status_codes_1.default.NOT_FOUND,
+                success: false,
+                message: "Driver profile not found",
+                data: [],
+            });
+        }
+        query = { driverId: driverDoc._id };
+    }
+    const bookings = yield ride_service_1.rideService.getMyRideHistory(query);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,

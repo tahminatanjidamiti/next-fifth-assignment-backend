@@ -8,13 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverService = void 0;
+const mongoose_1 = __importDefault(require("mongoose"));
 const QueryBuilder_1 = require("../../utils/QueryBuilder");
+const payment_interface_1 = require("../payment/payment.interface");
+const payment_model_1 = require("../payment/payment.model");
 const user_interface_1 = require("../user/user.interface");
 const user_model_1 = require("../user/user.model");
 const driver_constant_1 = require("./driver.constant");
 const driver_model_1 = require("./driver.model");
+const ride_model_1 = require("../ride/ride.model");
 const createDriver = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const driver = yield driver_model_1.Driver.create(payload);
     return driver;
@@ -67,7 +74,122 @@ const updateDriverStatus = (id, payload) => __awaiter(void 0, void 0, void 0, fu
     }
     return updatedDriver;
 });
-const getDriverById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getDriverStatsMe = (driverId) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const objectId = new mongoose_1.default.Types.ObjectId(driverId);
+    // ----------- Daily Earnings -----------
+    const dailyEarnings = yield payment_model_1.Payment.aggregate([
+        { $match: { status: payment_interface_1.PAYMENT_STATUS.PAID } },
+        {
+            $lookup: {
+                from: "ridebookings",
+                localField: "booking",
+                foreignField: "_id",
+                as: "bookingData",
+            },
+        },
+        { $unwind: "$bookingData" },
+        { $match: { "bookingData.driver": objectId } },
+        {
+            $group: {
+                _id: { day: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } } },
+                total: { $sum: "$amount" },
+            },
+        },
+        { $sort: { "_id.day": 1 } },
+    ]);
+    // ----------- Weekly Earnings -----------
+    const weeklyEarnings = yield payment_model_1.Payment.aggregate([
+        { $match: { status: payment_interface_1.PAYMENT_STATUS.PAID } },
+        {
+            $lookup: {
+                from: "ridebookings",
+                localField: "booking",
+                foreignField: "_id",
+                as: "bookingData",
+            },
+        },
+        { $unwind: "$bookingData" },
+        { $match: { "bookingData.driver": objectId } },
+        {
+            $group: {
+                _id: {
+                    week: { $isoWeek: "$createdAt" },
+                    year: { $isoWeekYear: "$createdAt" },
+                },
+                total: { $sum: "$amount" },
+            },
+        },
+        { $sort: { "_id.year": 1, "_id.week": 1 } },
+    ]);
+    // ----------- Monthly Earnings -----------
+    const monthlyEarnings = yield payment_model_1.Payment.aggregate([
+        { $match: { status: payment_interface_1.PAYMENT_STATUS.PAID } },
+        {
+            $lookup: {
+                from: "ridebookings",
+                localField: "booking",
+                foreignField: "_id",
+                as: "bookingData",
+            },
+        },
+        { $unwind: "$bookingData" },
+        { $match: { "bookingData.driver": objectId } },
+        {
+            $group: {
+                _id: {
+                    year: { $year: "$createdAt" },
+                    month: { $month: "$createdAt" },
+                },
+                total: { $sum: "$amount" },
+            },
+        },
+        { $sort: { "_id.year": 1, "_id.month": 1 } },
+    ]);
+    // ----------- Totals (earnings + rides) -----------
+    const totalStats = yield payment_model_1.Payment.aggregate([
+        { $match: { status: payment_interface_1.PAYMENT_STATUS.PAID } },
+        {
+            $lookup: {
+                from: "ridebookings",
+                localField: "booking",
+                foreignField: "_id",
+                as: "bookingData",
+            },
+        },
+        { $unwind: "$bookingData" },
+        { $match: { "bookingData.driver": objectId } },
+        {
+            $group: {
+                _id: null,
+                totalEarnings: { $sum: "$amount" },
+                totalRides: { $sum: 1 },
+            },
+        },
+    ]);
+    // ----------- Completed Rides Count -----------
+    const completedRides = yield ride_model_1.Ride.countDocuments({
+        driverId: objectId,
+        status: "COMPLETED",
+    });
+    return {
+        totalEarnings: ((_a = totalStats[0]) === null || _a === void 0 ? void 0 : _a.totalEarnings) || 0,
+        totalRides: ((_b = totalStats[0]) === null || _b === void 0 ? void 0 : _b.totalRides) || 0,
+        completedRides,
+        charts: {
+            daily: dailyEarnings.map((d) => ({ date: d._id.day, earnings: d.total })),
+            weekly: weeklyEarnings.map((w) => ({
+                week: `${w._id.year}-W${w._id.week}`,
+                earnings: w.total,
+            })),
+            monthly: monthlyEarnings.map((m) => ({
+                month: `${m._id.year}-${String(m._id.month).padStart(2, "0")}`,
+                earnings: m.total,
+            })),
+        },
+    };
+});
+const getDriverMe = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const driver = yield driver_model_1.Driver.findById(id);
     return {
         data: driver
@@ -77,6 +199,7 @@ exports.DriverService = {
     createDriver,
     getAllDrivers,
     getDriverByNear,
-    getDriverById,
+    getDriverMe,
+    getDriverStatsMe,
     updateDriverStatus,
 };

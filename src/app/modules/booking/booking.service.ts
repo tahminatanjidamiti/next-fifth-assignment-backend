@@ -11,6 +11,7 @@ import { BOOKING_STATUS, IRideBooking } from "./booking.interface";
 import { RideBooking } from "./booking.model";
 import { getTransactionId } from "../../utils/getTransactionId";
 import { Ride } from "../ride/ride.model";
+import { FilterQuery } from "mongoose";
 
 
 const createRideBooking = async (payload: Partial<IRideBooking>) => {
@@ -81,9 +82,11 @@ const createRideBooking = async (payload: Partial<IRideBooking>) => {
   }
 };
 
-const getUserBookings = async (userId: string) => {
-  const bookings = await RideBooking.find({ rider: userId })
-    .populate("ride", "riderId driverId fare") 
+const getUserBookings = async (filter: FilterQuery<IRideBooking>) => {
+  const bookings = await RideBooking.find(filter)
+    .populate("ride", "riderId driverId fare pickupLocation dropoffLocation") 
+    .populate("driver", "name email") 
+    .populate("rider", "name email")
     .populate("payment")
     .sort({ createdAt: -1 });
 
@@ -94,7 +97,8 @@ const getBookingById = async (bookingId: string) => {
   const booking = await RideBooking.findById(bookingId)
     .populate("ride", "riderId driverId fare")
     .populate("payment")
-    .populate("rider", "name email phone address");
+    .populate("rider", "name email phone address")
+    .populate("driver", "name email phone address");
 
   if (!booking) {
     throw new AppError(httpStatus.NOT_FOUND, "Booking not found");

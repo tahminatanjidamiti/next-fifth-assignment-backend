@@ -78,6 +78,7 @@ const getRideStats = async () => {
   };
 };
 
+
 const getDriverStats = async (driverId: string) => {
   const [
     totalRides,
@@ -85,6 +86,9 @@ const getDriverStats = async (driverId: string) => {
     earnings,
     recentRides,
     totalDrivers,
+    dailyEarnings,
+    weeklyEarnings,
+    monthlyEarnings,
   ] = await Promise.all([
     Ride.countDocuments({ driver: driverId }),
     Ride.countDocuments({ driver: driverId, status: "COMPLETED" }),
@@ -96,7 +100,43 @@ const getDriverStats = async (driverId: string) => {
       .sort({ createdAt: -1 })
       .limit(5)
       .select("pickupLocation dropoffLocation distanceKm status createdAt"),
-    Driver.countDocuments(), 
+    Driver.countDocuments(),
+
+    // 📊 Daily earnings
+    Payment.aggregate([
+      { $match: { driver: driverId, status: PAYMENT_STATUS.PAID } },
+      {
+        $group: {
+          _id: { day: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } } },
+          total: { $sum: "$amount" },
+        },
+      },
+      { $sort: { "_id.day": 1 } },
+    ]),
+
+    // 📊 Weekly earnings
+    Payment.aggregate([
+      { $match: { driver: driverId, status: PAYMENT_STATUS.PAID } },
+      {
+        $group: {
+          _id: { week: { $isoWeek: "$createdAt" }, year: { $year: "$createdAt" } },
+          total: { $sum: "$amount" },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.week": 1 } },
+    ]),
+
+    // 📊 Monthly earnings
+    Payment.aggregate([
+      { $match: { driver: driverId, status: PAYMENT_STATUS.PAID } },
+      {
+        $group: {
+          _id: { month: { $month: "$createdAt" }, year: { $year: "$createdAt" } },
+          total: { $sum: "$amount" },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } },
+    ]),
   ]);
 
   return {
@@ -105,8 +145,22 @@ const getDriverStats = async (driverId: string) => {
     totalEarnings: earnings?.[0]?.total || 0,
     recentRides,
     totalDrivers,
+    charts: {
+      daily: dailyEarnings.map(d => ({ date: d._id.day, earnings: d.total })),
+      weekly: weeklyEarnings.map(d => ({
+        week: `${d._id.year}-W${d._id.week}`,
+        earnings: d.total,
+      })),
+      monthly: monthlyEarnings.map(d => ({
+        month: `${d._id.year}-${d._id.month}`,
+        earnings: d.total,
+      })),
+    },
   };
 };
+
+
+
 
 const getBookingStats = async () => {
   const [totalBookings, bookingsByStatus, uniqueUsers, bookings7, bookings30] = await Promise.all([
