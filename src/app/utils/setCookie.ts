@@ -12,8 +12,6 @@ export const setAuthCookie = (res: Response, tokenInfo: AuthTokens) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            path: "/",
-
         })
 }
 

@@ -21,7 +21,7 @@ let server;
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(env_1.envVars.DB_URL);
-        console.log("Connected to DB!!");
+        // console.log("Connected to DB!!");
         server = app_1.default.listen(env_1.envVars.PORT, () => {
             console.log(`Server is listening on port ${env_1.envVars.PORT}`);
         });

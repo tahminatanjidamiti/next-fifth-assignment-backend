@@ -3,7 +3,7 @@
 A secure, role-based backend API for managing a ride-booking system built with **Node.js**, **Express**, **MongoDB**, and **TypeScript**.
 
 # Live Link
-# [https://next-fifth-assignment-backend-production.up.railway.app/](https://next-fifth-assignment-backend-production.up.railway.app/)
+# [https://ride-booking-system-backend-three.vercel.app/](https://ride-booking-system-backend-three.vercel.app/)
 
 ## 🚀 Features
 
@@ -63,7 +63,6 @@ src/
 │   ├── payment/              # Payment processing, history
 │   ├── stats/                # Admin dashboard stats, reports
 │   ├── otp/                  # OTP logic for 
-event
 │   ├── sos/                  # SOS event logic 
 verification 
 │   └── sslcommerz/           # Integration with SSLCommerz payment gateway

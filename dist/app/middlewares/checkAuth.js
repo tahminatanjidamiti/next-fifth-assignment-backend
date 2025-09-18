@@ -24,7 +24,7 @@ const checkAuth = (...authRoles) => (req, res, next) => __awaiter(void 0, void 0
     try {
         const accessToken = ((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1]) || req.cookies.accessToken;
         if (!accessToken) {
-            throw new AppError_1.default(403, "No Token Received");
+            return res.status(200).json({ data: null, message: "User is not logged in!" });
         }
         const verifiedToken = (0, jwt_1.verifyToken)(accessToken, env_1.envVars.JWT_ACCESS_SECRET);
         const isUserExist = yield user_model_1.User.findOne({ email: verifiedToken.email });

@@ -15,7 +15,7 @@ export const checkAuth = (...authRoles: string[]) =>  async (req: Request, res: 
     const accessToken = req.headers.authorization?.split(" ")[1] || req.cookies.accessToken;
 
     if (!accessToken) {
-      throw new AppError(403, "No Token Received")
+      return res.status(200).json({ data: null, message: "User is not logged in!" });
     }
 
     const verifiedToken = verifyToken(accessToken, envVars.JWT_ACCESS_SECRET) as IJwtUserPayload

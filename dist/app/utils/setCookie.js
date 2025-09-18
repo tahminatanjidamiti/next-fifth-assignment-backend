@@ -7,7 +7,6 @@ const setAuthCookie = (res, tokenInfo) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            path: "/",
         });
     }
     if (tokenInfo.refreshToken) {
