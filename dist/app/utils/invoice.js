@@ -41,7 +41,7 @@ const generatePdf = (invoiceData) => __awaiter(void 0, void 0, void 0, function*
             doc.fontSize(14).text(`riderId: ${invoiceData.riderId}`);
             doc.text(`driverId: ${invoiceData.driverId}`);
             doc.text(`riders: ${invoiceData.riderCount}`);
-            doc.text(`Total Amount: ৳${invoiceData.totalAmount.toFixed(2)}`);
+            doc.text(`Total Amount: ${invoiceData.totalAmount.toFixed(2)} Taka`);
             doc.moveDown(2);
             // Footer
             doc
