@@ -18,11 +18,6 @@ app.use(expressSession({
   secret: envVars.EXPRESS_SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: true, // true on Vercel
-    sameSite: "none", // allow cross-site cookies
-  }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
