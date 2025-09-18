@@ -20,11 +20,6 @@ app.use((0, express_session_1.default)({
     secret: env_1.envVars.EXPRESS_SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        secure: true, // true on Vercel
-        sameSite: "none", // allow cross-site cookies
-    }
 }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
