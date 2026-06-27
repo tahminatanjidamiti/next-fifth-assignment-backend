@@ -15,5 +15,5 @@ router.post("/", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Ro
 router.get("/", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), booking_controller_1.BookingController.getAllBookings);
 router.get("/my-bookings", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), booking_controller_1.BookingController.getUserBookings);
 router.get("/:bookingId", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), booking_controller_1.BookingController.getSingleBooking);
-router.patch("/:bookingId/status", (0, checkAuth_1.checkAuth)((user_interface_1.Role.ADMIN)), (0, validateRequest_1.validateRequest)(booking_validation_1.updateBookingStatusZodSchema), booking_controller_1.BookingController.updateBookingStatus);
+router.patch("/:bookingId/status", (0, checkAuth_1.checkAuth)(user_interface_1.Role.ADMIN), (0, validateRequest_1.validateRequest)(booking_validation_1.updateBookingStatusZodSchema), booking_controller_1.BookingController.updateBookingStatus);
 exports.BookingRoutes = router;

@@ -14,6 +14,6 @@ router.post("/register", validateRequest(createUserZodSchema), UserControllers.c
 router.get("/all-users", checkAuth(Role.ADMIN), UserControllers.getAllUsers)
 router.get("/me", checkAuth(...Object.values(Role)), UserControllers.getMe)
 router.get("/:id", checkAuth(Role.ADMIN), UserControllers.getSingleUser)
-router.patch("/update",  multerUpload.single("file"), validateRequest(updateUserZodSchema), checkAuth(...Object.values(Role)), UserControllers.updateUser)
+router.patch("/update",  checkAuth(...Object.values(Role)), multerUpload.single("file"), validateRequest(updateUserZodSchema), UserControllers.updateUser)
 router.delete("/:id", checkAuth(Role.ADMIN), UserControllers.deleteUser);
 export const UserRoutes = router;

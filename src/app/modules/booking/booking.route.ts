@@ -30,7 +30,7 @@ router.get("/:bookingId",
 );
 
 router.patch("/:bookingId/status",
-    checkAuth((Role.ADMIN)),
+    checkAuth(Role.ADMIN),
     validateRequest(updateBookingStatusZodSchema),
     BookingController.updateBookingStatus
 );
